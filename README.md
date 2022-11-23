@@ -1,2 +1,2 @@
-# BDMA-Group-17
-Assignment repository for BDMA Group 17 - Group Assignment
+# My-Repo
+Random repo here, nothing to see
