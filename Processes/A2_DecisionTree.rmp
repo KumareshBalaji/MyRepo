@@ -16,7 +16,7 @@
         <parameter key="repository_entry" value="../Data/dt_realestate_train_2022_preprocessed"/>
       </operator>
       <operator activated="true" class="multiply" compatibility="9.10.011" expanded="true" height="103" name="Multiply" width="90" x="179" y="34"/>
-      <operator activated="true" class="model_simulator:automatic_feature_engineering" compatibility="9.10.002" expanded="true" height="103" name="Automatic Feature Engineering" width="90" x="313" y="136">
+      <operator activated="true" class="model_simulator:automatic_feature_engineering" compatibility="9.10.002" expanded="true" height="103" name="Automatic Feature Engineering" width="90" x="380" y="136">
         <parameter key="mode" value="feature selection"/>
         <parameter key="balance for accuracy" value="0.9"/>
         <parameter key="show progress dialog" value="false"/>
@@ -96,7 +96,7 @@
           <portSpacing port="sink_performance sink" spacing="0"/>
         </process>
       </operator>
-      <operator activated="true" class="model_simulator:apply_feature_set" compatibility="9.10.002" expanded="true" height="82" name="Apply Feature Set (2)" width="90" x="447" y="34">
+      <operator activated="true" class="model_simulator:apply_feature_set" compatibility="9.10.002" expanded="true" height="82" name="Apply Feature Set (2)" width="90" x="514" y="34">
         <parameter key="handle missings" value="true"/>
         <parameter key="keep originals" value="false"/>
         <parameter key="originals special role" value="true"/>
@@ -113,12 +113,12 @@
         <process expanded="true">
           <operator activated="true" class="concurrency:parallel_decision_tree" compatibility="9.10.011" expanded="true" height="103" name="Decision Tree (2)" width="90" x="179" y="34">
             <parameter key="criterion" value="gain_ratio"/>
-            <parameter key="maximal_depth" value="10"/>
-            <parameter key="apply_pruning" value="true"/>
+            <parameter key="maximal_depth" value="20"/>
+            <parameter key="apply_pruning" value="false"/>
             <parameter key="confidence" value="0.1"/>
             <parameter key="apply_prepruning" value="true"/>
-            <parameter key="minimal_gain" value="0.01"/>
-            <parameter key="minimal_leaf_size" value="2"/>
+            <parameter key="minimal_gain" value="0.0"/>
+            <parameter key="minimal_leaf_size" value="32"/>
             <parameter key="minimal_size_for_split" value="4"/>
             <parameter key="number_of_prepruning_alternatives" value="3"/>
           </operator>
