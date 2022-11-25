@@ -1,9 +1,10 @@
-1)Decision Tree
-2)Gradient boosted tree
-3)Bagging (With different types of Trees)
+1)Generalized Linear Model
+2)Decision Tree
+3)Gradient boosted tree
 4)Random Forest
-5)Deep Learning
-6)Generalized Linear Model
+5)Bagging Random Forest(With different types of Trees)
+6)Deep Learning
 7)Classification by Regression
 8)Polynomial by Binomial Classification
-9)Automatic Feature Engineering
+
+Every model should be tuned with Automatic Feature Engineering
