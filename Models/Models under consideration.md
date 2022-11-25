@@ -7,4 +7,13 @@
 7)Classification by Regression
 8)Polynomial by Binomial Classification
 
+
+
 Every model should be tuned with Automatic Feature Engineering
+Note accuracy metric: classification error
+Cross validation with 10 fold
+
+
+
+Alex -> first 4 
+Kumaresh -> last 4
