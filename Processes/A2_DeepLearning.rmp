@@ -130,6 +130,9 @@
         <parameter key="originals special role" value="true"/>
         <parameter key="recreate missing attributes" value="true"/>
       </operator>
+      <operator activated="true" class="store" compatibility="10.0.000" expanded="true" height="68" name="Store Features" width="90" x="648" y="289">
+        <parameter key="repository_entry" value="../Models/A2_DeepLearning_Features"/>
+      </operator>
       <operator activated="true" class="concurrency:optimize_parameters_grid" compatibility="10.0.000" expanded="true" height="124" name="Optimize Parameters (Grid)" width="90" x="648" y="85">
         <list key="parameters">
           <parameter key="Deep Learning (2).activation" value="Tanh,Rectifier,Maxout"/>
@@ -263,6 +266,7 @@
       <connect from_op="Multiply" from_port="output 2" to_op="Automatic Feature Engineering" to_port="example set in"/>
       <connect from_op="Automatic Feature Engineering" from_port="feature set" to_op="Apply Feature Set" to_port="feature set"/>
       <connect from_op="Apply Feature Set" from_port="example set" to_op="Optimize Parameters (Grid)" to_port="input 1"/>
+      <connect from_op="Apply Feature Set" from_port="feature set" to_op="Store Features" to_port="input"/>
       <connect from_op="Optimize Parameters (Grid)" from_port="performance" to_op="Store Cross Validation Performance" to_port="input"/>
       <connect from_op="Optimize Parameters (Grid)" from_port="model" to_op="Store Model" to_port="input"/>
       <connect from_op="Optimize Parameters (Grid)" from_port="parameter set" to_op="Store Parameters" to_port="input"/>

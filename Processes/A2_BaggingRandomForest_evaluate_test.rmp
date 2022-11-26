@@ -18,11 +18,11 @@
       <operator activated="true" class="retrieve" compatibility="10.0.000" expanded="true" height="68" name="Retrieve Model" width="90" x="112" y="85">
         <parameter key="repository_entry" value="../Models/A2_BaggingRandomForest"/>
       </operator>
-      <operator activated="true" class="apply_model" compatibility="10.0.000" expanded="true" height="82" name="Apply Model" width="90" x="313" y="85">
+      <operator activated="true" class="apply_model" compatibility="10.0.000" expanded="true" height="82" name="Apply Model" width="90" x="447" y="85">
         <list key="application_parameters"/>
         <parameter key="create_view" value="false"/>
       </operator>
-      <operator activated="true" class="select_attributes" compatibility="10.0.000" expanded="true" height="82" name="Select Attributes" width="90" x="514" y="85">
+      <operator activated="true" class="select_attributes" compatibility="10.0.000" expanded="true" height="82" name="Select Attributes" width="90" x="648" y="85">
         <parameter key="attribute_filter_type" value="subset"/>
         <parameter key="attribute" value=""/>
         <parameter key="attributes" value="id|prediction(price_category)"/>
@@ -36,7 +36,7 @@
         <parameter key="invert_selection" value="false"/>
         <parameter key="include_special_attributes" value="true"/>
       </operator>
-      <operator activated="true" class="store" compatibility="10.0.000" expanded="true" height="68" name="Store Test Results" width="90" x="782" y="85">
+      <operator activated="true" class="store" compatibility="10.0.000" expanded="true" height="68" name="Store Test Results" width="90" x="849" y="85">
         <parameter key="repository_entry" value="../Results/A2_BaggingRandomForest_test_output"/>
       </operator>
       <connect from_op="Retrieve Testing Data" from_port="output" to_op="Apply Model" to_port="unlabelled data"/>
