@@ -16,18 +16,18 @@
         <parameter key="repository_entry" value="../Data/dt_realestate_train_2022_preprocessed"/>
       </operator>
       <operator activated="true" class="retrieve" compatibility="10.0.000" expanded="true" height="68" name="Retrieve Model" width="90" x="112" y="85">
-        <parameter key="repository_entry" value="../Models/A2_BaggingRandomForest"/>
+        <parameter key="repository_entry" value="../Models/A2_DeepLearning"/>
       </operator>
-      <operator activated="true" class="retrieve" compatibility="10.0.000" expanded="true" height="68" name="Retrieve Feature set" width="90" x="112" y="289">
-        <parameter key="repository_entry" value="../Models/A2_BaggingRandomForest_Features"/>
+      <operator activated="true" class="retrieve" compatibility="10.0.000" expanded="true" height="68" name="Retrieve Features" width="90" x="112" y="289">
+        <parameter key="repository_entry" value="../Models/A2_DeepLearning_Features"/>
       </operator>
-      <operator activated="true" class="model_simulator:apply_feature_set" compatibility="10.0.000" expanded="true" height="82" name="Apply Feature Set" width="90" x="246" y="238">
+      <operator activated="true" class="model_simulator:apply_feature_set" compatibility="10.0.000" expanded="true" height="82" name="Apply Feature Set" width="90" x="313" y="238">
         <parameter key="handle missings" value="true"/>
         <parameter key="keep originals" value="false"/>
         <parameter key="originals special role" value="true"/>
         <parameter key="recreate missing attributes" value="true"/>
       </operator>
-      <operator activated="true" class="apply_model" compatibility="10.0.000" expanded="true" height="82" name="Apply Model" width="90" x="447" y="85">
+      <operator activated="true" class="apply_model" compatibility="10.0.000" expanded="true" height="82" name="Apply Model" width="90" x="514" y="85">
         <list key="application_parameters"/>
         <parameter key="create_view" value="false"/>
       </operator>
@@ -58,12 +58,12 @@
         <parameter key="use_example_weights" value="true"/>
         <list key="class_weights"/>
       </operator>
-      <operator activated="true" class="store" compatibility="10.0.000" expanded="true" height="68" name="Store" width="90" x="782" y="85">
-        <parameter key="repository_entry" value="../Results/A2_BaggingRandomForest_train"/>
+      <operator activated="true" class="store" compatibility="10.0.000" expanded="true" height="68" name="Store" width="90" x="849" y="85">
+        <parameter key="repository_entry" value="../Results/A2_DeepLearning_train"/>
       </operator>
       <connect from_op="Retrieve Training Data" from_port="output" to_op="Apply Feature Set" to_port="example set"/>
       <connect from_op="Retrieve Model" from_port="output" to_op="Apply Model" to_port="model"/>
-      <connect from_op="Retrieve Feature set" from_port="output" to_op="Apply Feature Set" to_port="feature set"/>
+      <connect from_op="Retrieve Features" from_port="output" to_op="Apply Feature Set" to_port="feature set"/>
       <connect from_op="Apply Feature Set" from_port="example set" to_op="Apply Model" to_port="unlabelled data"/>
       <connect from_op="Apply Model" from_port="labelled data" to_op="Performance" to_port="labelled data"/>
       <connect from_op="Performance" from_port="performance" to_op="Store" to_port="input"/>

@@ -18,7 +18,7 @@
       <operator activated="true" class="multiply" compatibility="10.0.000" expanded="true" height="103" name="Multiply" width="90" x="179" y="85"/>
       <operator activated="true" class="model_simulator:automatic_feature_engineering" compatibility="10.0.000" expanded="true" height="103" name="Automatic Feature Engineering" width="90" x="313" y="238">
         <parameter key="mode" value="feature selection"/>
-        <parameter key="balance for accuracy" value="0.9"/>
+        <parameter key="balance for accuracy" value="1.0"/>
         <parameter key="show progress dialog" value="true"/>
         <parameter key="use_local_random_seed" value="false"/>
         <parameter key="local_random_seed" value="1992"/>
@@ -29,8 +29,8 @@
         <parameter key="use multi-starts" value="true"/>
         <parameter key="number of multi-starts" value="5"/>
         <parameter key="generations until multi-start" value="10"/>
-        <parameter key="use time limit" value="false"/>
-        <parameter key="time limit in seconds" value="60"/>
+        <parameter key="use time limit" value="true"/>
+        <parameter key="time limit in seconds" value="600"/>
         <parameter key="use subset for generation" value="false"/>
         <parameter key="maximum function complexity" value="10"/>
         <parameter key="use_plus" value="false"/>
@@ -46,14 +46,14 @@
         <parameter key="use_min" value="false"/>
         <parameter key="use_max" value="false"/>
         <process expanded="true">
-          <operator activated="true" class="concurrency:parallel_random_forest" compatibility="10.0.000" expanded="true" height="103" name="Random Forest (2)" width="90" x="313" y="34">
+          <operator activated="true" class="concurrency:parallel_random_forest" compatibility="10.0.000" expanded="true" height="103" name="Random Forest (2)" width="90" x="179" y="34">
             <parameter key="number_of_trees" value="50"/>
             <parameter key="criterion" value="information_gain"/>
             <parameter key="maximal_depth" value="10"/>
-            <parameter key="apply_pruning" value="false"/>
+            <parameter key="apply_pruning" value="true"/>
             <parameter key="confidence" value="0.1"/>
             <parameter key="apply_prepruning" value="true"/>
-            <parameter key="minimal_gain" value="0.01"/>
+            <parameter key="minimal_gain" value="0.0"/>
             <parameter key="minimal_leaf_size" value="2"/>
             <parameter key="minimal_size_for_split" value="4"/>
             <parameter key="number_of_prepruning_alternatives" value="3"/>
@@ -116,10 +116,9 @@
       </operator>
       <operator activated="true" class="concurrency:optimize_parameters_grid" compatibility="10.0.000" expanded="true" height="124" name="Optimize Parameters (Grid)" width="90" x="648" y="85">
         <list key="parameters">
-          <parameter key="Random Forest.number_of_trees" value="[100;120;2;linear]"/>
-          <parameter key="Random Forest.maximal_depth" value="[10;15;2;linear]"/>
-          <parameter key="Random Forest.minimal_gain" value="[0.0;0.2;4;linear]"/>
           <parameter key="Random Forest.criterion" value="information_gain,accuracy"/>
+          <parameter key="Random Forest.maximal_depth" value="[10;20;2;linear]"/>
+          <parameter key="Random Forest.minimal_leaf_size" value="[1;20;5;linear]"/>
         </list>
         <parameter key="error_handling" value="fail on error"/>
         <parameter key="log_performance" value="true"/>
@@ -144,7 +143,7 @@
                 <parameter key="local_random_seed" value="1992"/>
                 <process expanded="true">
                   <operator activated="true" class="concurrency:parallel_random_forest" compatibility="10.0.000" expanded="true" height="103" name="Random Forest" width="90" x="380" y="34">
-                    <parameter key="number_of_trees" value="120"/>
+                    <parameter key="number_of_trees" value="100"/>
                     <parameter key="criterion" value="information_gain"/>
                     <parameter key="maximal_depth" value="12"/>
                     <parameter key="apply_pruning" value="false"/>
