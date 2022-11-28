@@ -5,7 +5,7 @@
     <macros/>
   </context>
   <operator activated="true" class="process" compatibility="9.10.011" expanded="true" name="Process">
-    <parameter key="logverbosity" value="init"/>
+    <parameter key="logverbosity" value="error"/>
     <parameter key="random_seed" value="2001"/>
     <parameter key="send_mail" value="never"/>
     <parameter key="notification_email" value=""/>
@@ -15,7 +15,7 @@
       <operator activated="true" class="retrieve" compatibility="9.10.011" expanded="true" height="68" name="Retrieve" width="90" x="45" y="34">
         <parameter key="repository_entry" value="../Data/dt_realestate_train_2022_preprocessed"/>
       </operator>
-      <operator activated="true" class="multiply" compatibility="9.10.011" expanded="true" height="103" name="Multiply" width="90" x="179" y="136"/>
+      <operator activated="true" class="multiply" compatibility="9.10.011" expanded="true" height="103" name="Multiply" width="90" x="179" y="85"/>
       <operator activated="true" class="model_simulator:automatic_feature_engineering" compatibility="9.10.002" expanded="true" height="103" name="Automatic Feature Engineering" width="90" x="313" y="238">
         <parameter key="mode" value="feature selection"/>
         <parameter key="balance for accuracy" value="1.0"/>
@@ -46,7 +46,7 @@
         <parameter key="use_max" value="false"/>
         <process expanded="true">
           <operator activated="true" class="h2o:generalized_linear_model" compatibility="9.10.001" expanded="true" height="124" name="Generalized Linear Model (2)" width="90" x="179" y="85">
-            <parameter key="family" value="AUTO"/>
+            <parameter key="family" value="multinomial"/>
             <parameter key="link" value="family_default"/>
             <parameter key="solver" value="AUTO"/>
             <parameter key="reproducible" value="false"/>
@@ -140,7 +140,7 @@
             <parameter key="enable_parallel_execution" value="true"/>
             <process expanded="true">
               <operator activated="true" class="h2o:generalized_linear_model" compatibility="9.10.001" expanded="true" height="124" name="Generalized Linear Model" width="90" x="179" y="34">
-                <parameter key="family" value="AUTO"/>
+                <parameter key="family" value="multinomial"/>
                 <parameter key="link" value="family_default"/>
                 <parameter key="solver" value="AUTO"/>
                 <parameter key="reproducible" value="false"/>
