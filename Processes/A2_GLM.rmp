@@ -12,74 +12,249 @@
     <parameter key="process_duration_for_mail" value="30"/>
     <parameter key="encoding" value="SYSTEM"/>
     <process expanded="true">
-      <operator activated="true" class="multiply" compatibility="9.10.011" expanded="true" height="103" name="Multiply" width="90" x="313" y="136"/>
-      <operator activated="true" class="h2o:generalized_linear_model" compatibility="9.10.001" expanded="true" height="124" name="Generalized Linear Model" width="90" x="514" y="34">
-        <parameter key="family" value="AUTO"/>
-        <parameter key="link" value="family_default"/>
-        <parameter key="solver" value="AUTO"/>
-        <parameter key="reproducible" value="false"/>
-        <parameter key="maximum_number_of_threads" value="4"/>
-        <parameter key="use_regularization" value="true"/>
-        <parameter key="lambda_search" value="false"/>
-        <parameter key="number_of_lambdas" value="0"/>
-        <parameter key="lambda_min_ratio" value="0.0"/>
-        <parameter key="early_stopping" value="true"/>
-        <parameter key="stopping_rounds" value="3"/>
-        <parameter key="stopping_tolerance" value="0.001"/>
-        <parameter key="standardize" value="true"/>
-        <parameter key="non-negative_coefficients" value="false"/>
-        <parameter key="add_intercept" value="true"/>
-        <parameter key="compute_p-values" value="false"/>
-        <parameter key="remove_collinear_columns" value="false"/>
-        <parameter key="missing_values_handling" value="MeanImputation"/>
-        <parameter key="max_iterations" value="0"/>
-        <parameter key="specify_beta_constraints" value="false"/>
-        <list key="beta_constraints"/>
-        <parameter key="max_runtime_seconds" value="0"/>
-        <list key="expert_parameters"/>
-      </operator>
-      <operator activated="true" class="apply_model" compatibility="9.10.011" expanded="true" height="82" name="Apply Model" width="90" x="715" y="136">
-        <list key="application_parameters"/>
-        <parameter key="create_view" value="false"/>
-      </operator>
-      <operator activated="true" class="performance_classification" compatibility="9.10.011" expanded="true" height="82" name="Performance" width="90" x="849" y="85">
-        <parameter key="main_criterion" value="first"/>
-        <parameter key="accuracy" value="true"/>
-        <parameter key="classification_error" value="true"/>
-        <parameter key="kappa" value="false"/>
-        <parameter key="weighted_mean_recall" value="false"/>
-        <parameter key="weighted_mean_precision" value="false"/>
-        <parameter key="spearman_rho" value="false"/>
-        <parameter key="kendall_tau" value="false"/>
-        <parameter key="absolute_error" value="false"/>
-        <parameter key="relative_error" value="false"/>
-        <parameter key="relative_error_lenient" value="false"/>
-        <parameter key="relative_error_strict" value="false"/>
-        <parameter key="normalized_absolute_error" value="false"/>
-        <parameter key="root_mean_squared_error" value="false"/>
-        <parameter key="root_relative_squared_error" value="false"/>
-        <parameter key="squared_error" value="false"/>
-        <parameter key="correlation" value="false"/>
-        <parameter key="squared_correlation" value="false"/>
-        <parameter key="cross-entropy" value="false"/>
-        <parameter key="margin" value="false"/>
-        <parameter key="soft_margin_loss" value="false"/>
-        <parameter key="logistic_loss" value="false"/>
-        <parameter key="skip_undefined_labels" value="true"/>
-        <parameter key="use_example_weights" value="true"/>
-        <list key="class_weights"/>
-      </operator>
       <operator activated="true" class="retrieve" compatibility="9.10.011" expanded="true" height="68" name="Retrieve" width="90" x="45" y="34">
         <parameter key="repository_entry" value="../Data/dt_realestate_train_2022_preprocessed"/>
       </operator>
-      <connect from_op="Multiply" from_port="output 1" to_op="Generalized Linear Model" to_port="training set"/>
-      <connect from_op="Multiply" from_port="output 2" to_op="Apply Model" to_port="unlabelled data"/>
-      <connect from_op="Generalized Linear Model" from_port="model" to_op="Apply Model" to_port="model"/>
-      <connect from_op="Apply Model" from_port="labelled data" to_op="Performance" to_port="labelled data"/>
-      <connect from_op="Performance" from_port="performance" to_port="result 1"/>
+      <operator activated="true" class="multiply" compatibility="9.10.011" expanded="true" height="103" name="Multiply" width="90" x="179" y="136"/>
+      <operator activated="true" class="model_simulator:automatic_feature_engineering" compatibility="9.10.002" expanded="true" height="103" name="Automatic Feature Engineering" width="90" x="313" y="238">
+        <parameter key="mode" value="feature selection"/>
+        <parameter key="balance for accuracy" value="1.0"/>
+        <parameter key="show progress dialog" value="false"/>
+        <parameter key="use_local_random_seed" value="false"/>
+        <parameter key="local_random_seed" value="1992"/>
+        <parameter key="use optimization heuristics" value="true"/>
+        <parameter key="maximum generations" value="30"/>
+        <parameter key="population size" value="10"/>
+        <parameter key="use multi-starts" value="true"/>
+        <parameter key="number of multi-starts" value="5"/>
+        <parameter key="generations until multi-start" value="10"/>
+        <parameter key="use time limit" value="false"/>
+        <parameter key="time limit in seconds" value="60"/>
+        <parameter key="use subset for generation" value="false"/>
+        <parameter key="maximum function complexity" value="10"/>
+        <parameter key="use_plus" value="false"/>
+        <parameter key="use_diff" value="false"/>
+        <parameter key="use_mult" value="true"/>
+        <parameter key="use_div" value="true"/>
+        <parameter key="reciprocal_value" value="true"/>
+        <parameter key="use_square_roots" value="false"/>
+        <parameter key="use_exp" value="false"/>
+        <parameter key="use_log" value="false"/>
+        <parameter key="use_absolute_values" value="false"/>
+        <parameter key="use_sgn" value="false"/>
+        <parameter key="use_min" value="false"/>
+        <parameter key="use_max" value="false"/>
+        <process expanded="true">
+          <operator activated="true" class="h2o:generalized_linear_model" compatibility="9.10.001" expanded="true" height="124" name="Generalized Linear Model (2)" width="90" x="179" y="85">
+            <parameter key="family" value="AUTO"/>
+            <parameter key="link" value="family_default"/>
+            <parameter key="solver" value="AUTO"/>
+            <parameter key="reproducible" value="false"/>
+            <parameter key="maximum_number_of_threads" value="4"/>
+            <parameter key="use_regularization" value="true"/>
+            <parameter key="lambda_search" value="false"/>
+            <parameter key="number_of_lambdas" value="0"/>
+            <parameter key="lambda_min_ratio" value="0.0"/>
+            <parameter key="early_stopping" value="true"/>
+            <parameter key="stopping_rounds" value="3"/>
+            <parameter key="stopping_tolerance" value="0.001"/>
+            <parameter key="standardize" value="true"/>
+            <parameter key="non-negative_coefficients" value="false"/>
+            <parameter key="add_intercept" value="true"/>
+            <parameter key="compute_p-values" value="false"/>
+            <parameter key="remove_collinear_columns" value="false"/>
+            <parameter key="missing_values_handling" value="MeanImputation"/>
+            <parameter key="max_iterations" value="0"/>
+            <parameter key="specify_beta_constraints" value="false"/>
+            <list key="beta_constraints"/>
+            <parameter key="max_runtime_seconds" value="0"/>
+            <list key="expert_parameters"/>
+          </operator>
+          <operator activated="true" class="apply_model" compatibility="9.10.011" expanded="true" height="82" name="Apply Model (2)" width="90" x="380" y="136">
+            <list key="application_parameters"/>
+            <parameter key="create_view" value="false"/>
+          </operator>
+          <operator activated="true" class="performance_classification" compatibility="9.10.011" expanded="true" height="82" name="Performance (2)" width="90" x="581" y="136">
+            <parameter key="main_criterion" value="classification_error"/>
+            <parameter key="accuracy" value="false"/>
+            <parameter key="classification_error" value="true"/>
+            <parameter key="kappa" value="false"/>
+            <parameter key="weighted_mean_recall" value="false"/>
+            <parameter key="weighted_mean_precision" value="false"/>
+            <parameter key="spearman_rho" value="false"/>
+            <parameter key="kendall_tau" value="false"/>
+            <parameter key="absolute_error" value="false"/>
+            <parameter key="relative_error" value="false"/>
+            <parameter key="relative_error_lenient" value="false"/>
+            <parameter key="relative_error_strict" value="false"/>
+            <parameter key="normalized_absolute_error" value="false"/>
+            <parameter key="root_mean_squared_error" value="false"/>
+            <parameter key="root_relative_squared_error" value="false"/>
+            <parameter key="squared_error" value="false"/>
+            <parameter key="correlation" value="false"/>
+            <parameter key="squared_correlation" value="false"/>
+            <parameter key="cross-entropy" value="false"/>
+            <parameter key="margin" value="false"/>
+            <parameter key="soft_margin_loss" value="false"/>
+            <parameter key="logistic_loss" value="false"/>
+            <parameter key="skip_undefined_labels" value="true"/>
+            <parameter key="use_example_weights" value="true"/>
+            <list key="class_weights"/>
+          </operator>
+          <connect from_port="example set source" to_op="Generalized Linear Model (2)" to_port="training set"/>
+          <connect from_op="Generalized Linear Model (2)" from_port="model" to_op="Apply Model (2)" to_port="model"/>
+          <connect from_op="Generalized Linear Model (2)" from_port="exampleSet" to_op="Apply Model (2)" to_port="unlabelled data"/>
+          <connect from_op="Apply Model (2)" from_port="labelled data" to_op="Performance (2)" to_port="labelled data"/>
+          <connect from_op="Performance (2)" from_port="performance" to_port="performance sink"/>
+          <portSpacing port="source_example set source" spacing="0"/>
+          <portSpacing port="sink_performance sink" spacing="0"/>
+        </process>
+      </operator>
+      <operator activated="true" class="model_simulator:apply_feature_set" compatibility="9.10.002" expanded="true" height="82" name="Apply Feature Set" width="90" x="447" y="187">
+        <parameter key="handle missings" value="true"/>
+        <parameter key="keep originals" value="false"/>
+        <parameter key="originals special role" value="true"/>
+        <parameter key="recreate missing attributes" value="true"/>
+      </operator>
+      <operator activated="true" class="store" compatibility="9.10.011" expanded="true" height="68" name="Store" width="90" x="581" y="340">
+        <parameter key="repository_entry" value="../Models/A2_GLM_Features"/>
+      </operator>
+      <operator activated="true" class="concurrency:optimize_parameters_grid" compatibility="9.10.011" expanded="true" height="145" name="Optimize Parameters (Grid)" width="90" x="581" y="34">
+        <list key="parameters">
+          <parameter key="Performance.accuracy" value="true,false"/>
+          <parameter key="Performance.classification_error" value="true,false"/>
+        </list>
+        <parameter key="error_handling" value="fail on error"/>
+        <parameter key="log_performance" value="true"/>
+        <parameter key="log_all_criteria" value="false"/>
+        <parameter key="synchronize" value="false"/>
+        <parameter key="enable_parallel_execution" value="true"/>
+        <process expanded="true">
+          <operator activated="true" class="concurrency:cross_validation" compatibility="9.10.011" expanded="true" height="166" name="Cross Validation" width="90" x="313" y="85">
+            <parameter key="split_on_batch_attribute" value="false"/>
+            <parameter key="leave_one_out" value="false"/>
+            <parameter key="number_of_folds" value="10"/>
+            <parameter key="sampling_type" value="automatic"/>
+            <parameter key="use_local_random_seed" value="false"/>
+            <parameter key="local_random_seed" value="1992"/>
+            <parameter key="enable_parallel_execution" value="true"/>
+            <process expanded="true">
+              <operator activated="true" class="h2o:generalized_linear_model" compatibility="9.10.001" expanded="true" height="124" name="Generalized Linear Model" width="90" x="179" y="34">
+                <parameter key="family" value="AUTO"/>
+                <parameter key="link" value="family_default"/>
+                <parameter key="solver" value="AUTO"/>
+                <parameter key="reproducible" value="false"/>
+                <parameter key="maximum_number_of_threads" value="4"/>
+                <parameter key="use_regularization" value="true"/>
+                <parameter key="lambda_search" value="false"/>
+                <parameter key="number_of_lambdas" value="0"/>
+                <parameter key="lambda_min_ratio" value="0.0"/>
+                <parameter key="early_stopping" value="true"/>
+                <parameter key="stopping_rounds" value="3"/>
+                <parameter key="stopping_tolerance" value="0.001"/>
+                <parameter key="standardize" value="true"/>
+                <parameter key="non-negative_coefficients" value="false"/>
+                <parameter key="add_intercept" value="true"/>
+                <parameter key="compute_p-values" value="false"/>
+                <parameter key="remove_collinear_columns" value="false"/>
+                <parameter key="missing_values_handling" value="MeanImputation"/>
+                <parameter key="max_iterations" value="0"/>
+                <parameter key="specify_beta_constraints" value="false"/>
+                <list key="beta_constraints"/>
+                <parameter key="max_runtime_seconds" value="0"/>
+                <list key="expert_parameters"/>
+              </operator>
+              <connect from_port="training set" to_op="Generalized Linear Model" to_port="training set"/>
+              <connect from_op="Generalized Linear Model" from_port="model" to_port="model"/>
+              <connect from_op="Generalized Linear Model" from_port="exampleSet" to_port="through 1"/>
+              <portSpacing port="source_training set" spacing="0"/>
+              <portSpacing port="sink_model" spacing="0"/>
+              <portSpacing port="sink_through 1" spacing="0"/>
+              <portSpacing port="sink_through 2" spacing="0"/>
+            </process>
+            <process expanded="true">
+              <operator activated="true" class="apply_model" compatibility="9.10.011" expanded="true" height="82" name="Apply Model" width="90" x="112" y="85">
+                <list key="application_parameters"/>
+                <parameter key="create_view" value="false"/>
+              </operator>
+              <operator activated="true" class="performance_classification" compatibility="9.10.011" expanded="true" height="82" name="Performance" width="90" x="246" y="34">
+                <parameter key="main_criterion" value="classification_error"/>
+                <parameter key="accuracy" value="true"/>
+                <parameter key="classification_error" value="true"/>
+                <parameter key="kappa" value="false"/>
+                <parameter key="weighted_mean_recall" value="false"/>
+                <parameter key="weighted_mean_precision" value="false"/>
+                <parameter key="spearman_rho" value="false"/>
+                <parameter key="kendall_tau" value="false"/>
+                <parameter key="absolute_error" value="false"/>
+                <parameter key="relative_error" value="false"/>
+                <parameter key="relative_error_lenient" value="false"/>
+                <parameter key="relative_error_strict" value="false"/>
+                <parameter key="normalized_absolute_error" value="false"/>
+                <parameter key="root_mean_squared_error" value="false"/>
+                <parameter key="root_relative_squared_error" value="false"/>
+                <parameter key="squared_error" value="false"/>
+                <parameter key="correlation" value="false"/>
+                <parameter key="squared_correlation" value="false"/>
+                <parameter key="cross-entropy" value="false"/>
+                <parameter key="margin" value="false"/>
+                <parameter key="soft_margin_loss" value="false"/>
+                <parameter key="logistic_loss" value="false"/>
+                <parameter key="skip_undefined_labels" value="true"/>
+                <parameter key="use_example_weights" value="true"/>
+                <list key="class_weights"/>
+              </operator>
+              <connect from_port="model" to_op="Apply Model" to_port="model"/>
+              <connect from_port="test set" to_op="Apply Model" to_port="unlabelled data"/>
+              <connect from_op="Apply Model" from_port="labelled data" to_op="Performance" to_port="labelled data"/>
+              <connect from_op="Performance" from_port="performance" to_port="performance 1"/>
+              <connect from_op="Performance" from_port="example set" to_port="performance 2"/>
+              <portSpacing port="source_model" spacing="0"/>
+              <portSpacing port="source_test set" spacing="0"/>
+              <portSpacing port="source_through 1" spacing="0"/>
+              <portSpacing port="source_through 2" spacing="0"/>
+              <portSpacing port="sink_test set results" spacing="0"/>
+              <portSpacing port="sink_performance 1" spacing="0"/>
+              <portSpacing port="sink_performance 2" spacing="0"/>
+              <portSpacing port="sink_performance 3" spacing="0"/>
+            </process>
+          </operator>
+          <connect from_port="input 1" to_op="Cross Validation" to_port="example set"/>
+          <connect from_op="Cross Validation" from_port="model" to_port="model"/>
+          <connect from_op="Cross Validation" from_port="example set" to_port="output 1"/>
+          <connect from_op="Cross Validation" from_port="performance 1" to_port="performance"/>
+          <portSpacing port="source_input 1" spacing="0"/>
+          <portSpacing port="source_input 2" spacing="0"/>
+          <portSpacing port="sink_performance" spacing="0"/>
+          <portSpacing port="sink_model" spacing="0"/>
+          <portSpacing port="sink_output 1" spacing="0"/>
+          <portSpacing port="sink_output 2" spacing="0"/>
+        </process>
+      </operator>
+      <operator activated="true" class="store" compatibility="9.10.011" expanded="true" height="68" name="Store Model" width="90" x="782" y="238">
+        <parameter key="repository_entry" value="//Local Repository/A2_GLM"/>
+      </operator>
+      <operator activated="true" class="store" compatibility="9.10.011" expanded="true" height="68" name="Store Parameters" width="90" x="782" y="136">
+        <parameter key="repository_entry" value="../Models/A2_GLM_Parameters"/>
+      </operator>
+      <operator activated="true" class="store" compatibility="9.10.011" expanded="true" height="68" name="Store Cross Validation Performance" width="90" x="849" y="34">
+        <parameter key="repository_entry" value="../Results/A2_GLM_crossval"/>
+      </operator>
+      <connect from_op="Retrieve" from_port="output" to_op="Multiply" to_port="input"/>
+      <connect from_op="Multiply" from_port="output 1" to_op="Apply Feature Set" to_port="example set"/>
+      <connect from_op="Multiply" from_port="output 2" to_op="Automatic Feature Engineering" to_port="example set in"/>
+      <connect from_op="Automatic Feature Engineering" from_port="feature set" to_op="Apply Feature Set" to_port="feature set"/>
+      <connect from_op="Apply Feature Set" from_port="example set" to_op="Optimize Parameters (Grid)" to_port="input 1"/>
+      <connect from_op="Apply Feature Set" from_port="feature set" to_op="Store" to_port="input"/>
+      <connect from_op="Optimize Parameters (Grid)" from_port="performance" to_op="Store Cross Validation Performance" to_port="input"/>
+      <connect from_op="Optimize Parameters (Grid)" from_port="model" to_op="Store Model" to_port="input"/>
+      <connect from_op="Optimize Parameters (Grid)" from_port="parameter set" to_op="Store Parameters" to_port="input"/>
+      <connect from_op="Store Parameters" from_port="through" to_port="result 2"/>
+      <connect from_op="Store Cross Validation Performance" from_port="through" to_port="result 1"/>
       <portSpacing port="source_input 1" spacing="0"/>
       <portSpacing port="sink_result 1" spacing="0"/>
       <portSpacing port="sink_result 2" spacing="0"/>
+      <portSpacing port="sink_result 3" spacing="0"/>
     </process>
   </operator>
 </process>

@@ -18,7 +18,7 @@
       <operator activated="true" class="multiply" compatibility="9.10.011" expanded="true" height="103" name="Multiply (2)" width="90" x="179" y="85"/>
       <operator activated="true" class="model_simulator:automatic_feature_engineering" compatibility="9.10.002" expanded="true" height="103" name="Automatic Feature Engineering" width="90" x="313" y="187">
         <parameter key="mode" value="feature selection"/>
-        <parameter key="balance for accuracy" value="0.8"/>
+        <parameter key="balance for accuracy" value="1.0"/>
         <parameter key="show progress dialog" value="false"/>
         <parameter key="use_local_random_seed" value="false"/>
         <parameter key="local_random_seed" value="1992"/>
