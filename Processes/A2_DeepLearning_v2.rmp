@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="UTF-8"?><process version="9.10.011">
+<?xml version="1.0" encoding="UTF-8"?><process version="10.0.000">
   <context>
     <input/>
     <output/>
     <macros/>
   </context>
-  <operator activated="true" class="process" compatibility="9.10.011" expanded="true" name="Process">
+  <operator activated="true" class="process" compatibility="10.0.000" expanded="true" name="Process">
     <parameter key="logverbosity" value="init"/>
     <parameter key="random_seed" value="2001"/>
     <parameter key="send_mail" value="never"/>
@@ -12,17 +12,18 @@
     <parameter key="process_duration_for_mail" value="30"/>
     <parameter key="encoding" value="SYSTEM"/>
     <process expanded="true">
-      <operator activated="true" class="retrieve" compatibility="9.10.011" expanded="true" height="68" name="Retrieve" width="90" x="45" y="85">
+      <operator activated="true" class="retrieve" compatibility="10.0.000" expanded="true" height="68" name="Retrieve" width="90" x="45" y="85">
         <parameter key="repository_entry" value="../Data/dt_realestate_train_2022_preprocessed_v2"/>
       </operator>
-      <operator activated="true" class="multiply" compatibility="9.10.011" expanded="true" height="103" name="Multiply" width="90" x="179" y="85"/>
-      <operator activated="true" class="model_simulator:automatic_feature_engineering" compatibility="9.10.002" expanded="true" height="103" name="Automatic Feature Engineering" width="90" x="313" y="136">
+      <operator activated="true" class="multiply" compatibility="10.0.000" expanded="true" height="103" name="Multiply" width="90" x="179" y="85"/>
+      <operator activated="true" class="model_simulator:automatic_feature_engineering" compatibility="10.0.000" expanded="true" height="103" name="Automatic Feature Engineering" width="90" x="313" y="238">
         <parameter key="mode" value="feature selection and generation"/>
         <parameter key="balance for accuracy" value="1.0"/>
         <parameter key="show progress dialog" value="false"/>
         <parameter key="use_local_random_seed" value="false"/>
         <parameter key="local_random_seed" value="1992"/>
         <parameter key="use optimization heuristics" value="true"/>
+        <parameter key="stop without improval" value="true"/>
         <parameter key="maximum generations" value="30"/>
         <parameter key="population size" value="10"/>
         <parameter key="use multi-starts" value="true"/>
@@ -45,7 +46,7 @@
         <parameter key="use_min" value="false"/>
         <parameter key="use_max" value="false"/>
         <process expanded="true">
-          <operator activated="true" class="h2o:deep_learning" compatibility="9.10.001" expanded="true" height="103" name="Deep Learning" width="90" x="112" y="34">
+          <operator activated="true" class="h2o:deep_learning" compatibility="10.0.000" expanded="true" height="103" name="Deep Learning" width="90" x="112" y="34">
             <parameter key="activation" value="Rectifier"/>
             <enumeration key="hidden_layer_sizes">
               <parameter key="hidden_layer_sizes" value="50"/>
@@ -83,11 +84,11 @@
             <list key="expert_parameters"/>
             <list key="expert_parameters_"/>
           </operator>
-          <operator activated="true" class="apply_model" compatibility="9.10.011" expanded="true" height="82" name="Apply Model (2)" width="90" x="380" y="34">
+          <operator activated="true" class="apply_model" compatibility="10.0.000" expanded="true" height="82" name="Apply Model (2)" width="90" x="380" y="34">
             <list key="application_parameters"/>
             <parameter key="create_view" value="false"/>
           </operator>
-          <operator activated="true" class="performance_classification" compatibility="9.10.011" expanded="true" height="82" name="Performance (2)" width="90" x="648" y="34">
+          <operator activated="true" class="performance_classification" compatibility="10.0.000" expanded="true" height="82" name="Performance (2)" width="90" x="648" y="34">
             <parameter key="main_criterion" value="first"/>
             <parameter key="accuracy" value="false"/>
             <parameter key="classification_error" value="true"/>
@@ -123,34 +124,24 @@
           <portSpacing port="sink_performance sink" spacing="0"/>
         </process>
       </operator>
-      <operator activated="true" class="model_simulator:apply_feature_set" compatibility="9.10.002" expanded="true" height="82" name="Apply Feature Set" width="90" x="447" y="34">
+      <operator activated="true" class="model_simulator:apply_feature_set" compatibility="10.0.000" expanded="true" height="82" name="Apply Feature Set" width="90" x="447" y="85">
         <parameter key="handle missings" value="true"/>
         <parameter key="keep originals" value="false"/>
         <parameter key="originals special role" value="true"/>
         <parameter key="recreate missing attributes" value="true"/>
       </operator>
-      <operator activated="true" class="optimize_parameters_evolutionary" compatibility="9.10.011" expanded="true" height="124" name="Optimize Parameters (Evolutionary)" width="90" x="581" y="34">
+      <operator activated="true" class="concurrency:optimize_parameters_grid" compatibility="10.0.000" expanded="true" height="124" name="Optimize Parameters (Grid)" width="90" x="648" y="85">
         <list key="parameters">
-          <parameter key="Deep Learning (2).epochs" value="[0.0;50]"/>
-          <parameter key="Deep Learning (2).epsilon" value="[0.0;Infinity]"/>
-          <parameter key="Deep Learning (2).rho" value="[0.0;Infinity]"/>
+          <parameter key="Deep Learning (2).activation" value="Tanh,Rectifier,Maxout,ExpRectifier"/>
+          <parameter key="Deep Learning (2).epochs" value="[10;50;5;linear]"/>
         </list>
         <parameter key="error_handling" value="fail on error"/>
-        <parameter key="max_generations" value="50"/>
-        <parameter key="use_early_stopping" value="false"/>
-        <parameter key="generations_without_improval" value="2"/>
-        <parameter key="specify_population_size" value="true"/>
-        <parameter key="population_size" value="5"/>
-        <parameter key="keep_best" value="true"/>
-        <parameter key="mutation_type" value="gaussian_mutation"/>
-        <parameter key="selection_type" value="tournament"/>
-        <parameter key="tournament_fraction" value="0.25"/>
-        <parameter key="crossover_prob" value="0.9"/>
-        <parameter key="use_local_random_seed" value="false"/>
-        <parameter key="local_random_seed" value="1992"/>
-        <parameter key="show_convergence_plot" value="false"/>
+        <parameter key="log_performance" value="true"/>
+        <parameter key="log_all_criteria" value="false"/>
+        <parameter key="synchronize" value="false"/>
+        <parameter key="enable_parallel_execution" value="true"/>
         <process expanded="true">
-          <operator activated="true" class="concurrency:cross_validation" compatibility="9.10.011" expanded="true" height="145" name="Cross Validation" width="90" x="313" y="34">
+          <operator activated="true" class="concurrency:cross_validation" compatibility="10.0.000" expanded="true" height="145" name="Cross Validation" width="90" x="313" y="34">
             <parameter key="split_on_batch_attribute" value="false"/>
             <parameter key="leave_one_out" value="false"/>
             <parameter key="number_of_folds" value="10"/>
@@ -159,10 +150,9 @@
             <parameter key="local_random_seed" value="1992"/>
             <parameter key="enable_parallel_execution" value="true"/>
             <process expanded="true">
-              <operator activated="true" class="h2o:deep_learning" compatibility="9.10.001" expanded="true" height="103" name="Deep Learning (2)" width="90" x="179" y="34">
-                <parameter key="activation" value="Rectifier"/>
+              <operator activated="true" class="h2o:deep_learning" compatibility="10.0.000" expanded="true" height="103" name="Deep Learning (2)" width="90" x="112" y="34">
+                <parameter key="activation" value="Tanh"/>
                 <enumeration key="hidden_layer_sizes">
-                  <parameter key="hidden_layer_sizes" value="50"/>
                   <parameter key="hidden_layer_sizes" value="50"/>
                   <parameter key="hidden_layer_sizes" value="50"/>
                 </enumeration>
@@ -170,13 +160,13 @@
                 <parameter key="reproducible_(uses_1_thread)" value="false"/>
                 <parameter key="use_local_random_seed" value="false"/>
                 <parameter key="local_random_seed" value="1992"/>
-                <parameter key="epochs" value="38.519743821823404"/>
-                <parameter key="compute_variable_importances" value="true"/>
+                <parameter key="epochs" value="10.0"/>
+                <parameter key="compute_variable_importances" value="false"/>
                 <parameter key="train_samples_per_iteration" value="-2"/>
                 <parameter key="adaptive_rate" value="true"/>
-                <parameter key="epsilon" value="Infinity"/>
-                <parameter key="rho" value="Infinity"/>
-                <parameter key="learning_rate" value="0.3438888834963255"/>
+                <parameter key="epsilon" value="1.0E-8"/>
+                <parameter key="rho" value="0.99"/>
+                <parameter key="learning_rate" value="0.005"/>
                 <parameter key="learning_rate_annealing" value="1.0E-6"/>
                 <parameter key="learning_rate_decay" value="1.0"/>
                 <parameter key="momentum_start" value="0.0"/>
@@ -205,11 +195,11 @@
               <portSpacing port="sink_through 1" spacing="0"/>
             </process>
             <process expanded="true">
-              <operator activated="true" class="apply_model" compatibility="9.10.011" expanded="true" height="82" name="Apply Model" width="90" x="112" y="34">
+              <operator activated="true" class="apply_model" compatibility="10.0.000" expanded="true" height="82" name="Apply Model" width="90" x="112" y="34">
                 <list key="application_parameters"/>
                 <parameter key="create_view" value="false"/>
               </operator>
-              <operator activated="true" class="performance_classification" compatibility="9.10.011" expanded="true" height="82" name="Performance" width="90" x="246" y="34">
+              <operator activated="true" class="performance_classification" compatibility="10.0.000" expanded="true" height="82" name="Performance" width="90" x="246" y="34">
                 <parameter key="main_criterion" value="first"/>
                 <parameter key="accuracy" value="true"/>
                 <parameter key="classification_error" value="true"/>
@@ -249,61 +239,33 @@
             </process>
           </operator>
           <connect from_port="input 1" to_op="Cross Validation" to_port="example set"/>
-          <connect from_op="Cross Validation" from_port="model" to_port="result 1"/>
+          <connect from_op="Cross Validation" from_port="model" to_port="model"/>
           <connect from_op="Cross Validation" from_port="performance 1" to_port="performance"/>
           <portSpacing port="source_input 1" spacing="0"/>
           <portSpacing port="source_input 2" spacing="0"/>
           <portSpacing port="sink_performance" spacing="0"/>
-          <portSpacing port="sink_result 1" spacing="0"/>
-          <portSpacing port="sink_result 2" spacing="0"/>
+          <portSpacing port="sink_model" spacing="0"/>
+          <portSpacing port="sink_output 1" spacing="0"/>
         </process>
       </operator>
-      <operator activated="true" class="store" compatibility="9.10.011" expanded="true" height="68" name="Store Model" width="90" x="715" y="136">
+      <operator activated="true" class="store" compatibility="10.0.000" expanded="true" height="68" name="Store Model" width="90" x="849" y="136">
         <parameter key="repository_entry" value="../Models/A2_DeepLearning_v2"/>
       </operator>
-      <operator activated="true" class="store" compatibility="9.10.011" expanded="true" height="68" name="Store Cross Validation Performance" width="90" x="715" y="34">
-        <parameter key="repository_entry" value="../Results/A2_DeepLearning_v2_crossval"/>
-      </operator>
-      <operator activated="true" class="retrieve" compatibility="9.10.011" expanded="true" height="68" name="Retrieve Test" width="90" x="313" y="340">
-        <parameter key="repository_entry" value="../Data/dt_realestate_test_2022_preprocessed"/>
-      </operator>
-      <operator activated="true" class="model_simulator:apply_feature_set" compatibility="9.10.002" expanded="true" height="82" name="Apply Feature Set (2)" width="90" x="581" y="289">
-        <parameter key="handle missings" value="true"/>
-        <parameter key="keep originals" value="false"/>
-        <parameter key="originals special role" value="true"/>
-        <parameter key="recreate missing attributes" value="true"/>
-      </operator>
-      <operator activated="true" class="store" compatibility="9.10.011" expanded="true" height="68" name="Store Features" width="90" x="715" y="442">
+      <operator activated="true" class="store" compatibility="10.0.000" expanded="true" height="68" name="Store Features" width="90" x="715" y="340">
         <parameter key="repository_entry" value="../Models/A2_DeepLearning_v2_Features"/>
       </operator>
-      <operator activated="true" class="apply_model" compatibility="9.10.011" expanded="true" height="82" name="Apply Model (3)" width="90" x="715" y="289">
-        <list key="application_parameters"/>
-        <parameter key="create_view" value="false"/>
-      </operator>
-      <operator activated="true" class="write_csv" compatibility="9.10.011" expanded="true" height="82" name="Write CSV" width="90" x="849" y="289">
-        <parameter key="csv_file" value="D:/Study documents/IE MIM/Exchange/Courses/BM04BIM - Big Data Management and Analytics/Project/BDMA-Group-17/Results/A2_DeepLearning_v2_test.csv"/>
-        <parameter key="column_separator" value=","/>
-        <parameter key="write_attribute_names" value="true"/>
-        <parameter key="quote_nominal_values" value="true"/>
-        <parameter key="format_date_attributes" value="true"/>
-        <parameter key="date_format" value="yyyy-MM-dd HH:mm:ss"/>
-        <parameter key="append_to_file" value="false"/>
-        <parameter key="encoding" value="SYSTEM"/>
+      <operator activated="true" class="store" compatibility="10.0.000" expanded="true" height="68" name="Store Cross Validation Performance" width="90" x="849" y="34">
+        <parameter key="repository_entry" value="../Results/A2_DeepLearning_v2_crossval"/>
       </operator>
       <connect from_op="Retrieve" from_port="output" to_op="Multiply" to_port="input"/>
       <connect from_op="Multiply" from_port="output 1" to_op="Apply Feature Set" to_port="example set"/>
       <connect from_op="Multiply" from_port="output 2" to_op="Automatic Feature Engineering" to_port="example set in"/>
       <connect from_op="Automatic Feature Engineering" from_port="feature set" to_op="Apply Feature Set" to_port="feature set"/>
-      <connect from_op="Apply Feature Set" from_port="example set" to_op="Optimize Parameters (Evolutionary)" to_port="input 1"/>
-      <connect from_op="Apply Feature Set" from_port="feature set" to_op="Apply Feature Set (2)" to_port="feature set"/>
-      <connect from_op="Optimize Parameters (Evolutionary)" from_port="performance" to_op="Store Cross Validation Performance" to_port="input"/>
-      <connect from_op="Optimize Parameters (Evolutionary)" from_port="result 1" to_op="Store Model" to_port="input"/>
-      <connect from_op="Store Model" from_port="through" to_op="Apply Model (3)" to_port="model"/>
+      <connect from_op="Apply Feature Set" from_port="example set" to_op="Optimize Parameters (Grid)" to_port="input 1"/>
+      <connect from_op="Apply Feature Set" from_port="feature set" to_op="Store Features" to_port="input"/>
+      <connect from_op="Optimize Parameters (Grid)" from_port="performance" to_op="Store Cross Validation Performance" to_port="input"/>
+      <connect from_op="Optimize Parameters (Grid)" from_port="model" to_op="Store Model" to_port="input"/>
       <connect from_op="Store Cross Validation Performance" from_port="through" to_port="result 1"/>
-      <connect from_op="Retrieve Test" from_port="output" to_op="Apply Feature Set (2)" to_port="example set"/>
-      <connect from_op="Apply Feature Set (2)" from_port="example set" to_op="Apply Model (3)" to_port="unlabelled data"/>
-      <connect from_op="Apply Feature Set (2)" from_port="feature set" to_op="Store Features" to_port="input"/>
-      <connect from_op="Apply Model (3)" from_port="labelled data" to_op="Write CSV" to_port="input"/>
       <portSpacing port="source_input 1" spacing="0"/>
       <portSpacing port="sink_result 1" spacing="0"/>
       <portSpacing port="sink_result 2" spacing="0"/>
