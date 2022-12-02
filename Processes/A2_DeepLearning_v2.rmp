@@ -129,7 +129,7 @@
         <parameter key="originals special role" value="true"/>
         <parameter key="recreate missing attributes" value="true"/>
       </operator>
-      <operator activated="true" class="concurrency:optimize_parameters_grid" compatibility="9.10.011" expanded="true" height="166" name="Optimize Parameters (Grid)" width="90" x="648" y="85">
+      <operator activated="true" class="concurrency:optimize_parameters_grid" compatibility="9.10.011" expanded="true" height="145" name="Optimize Parameters (Grid)" width="90" x="648" y="85">
         <list key="parameters">
           <parameter key="Deep Learning (2).activation" value="Tanh,Rectifier,Maxout,ExpRectifier"/>
           <parameter key="Deep Learning (2).epochs" value="[10;50;5;linear]"/>
@@ -228,10 +228,13 @@
                 <parameter key="use_example_weights" value="true"/>
                 <list key="class_weights"/>
               </operator>
+              <operator activated="true" class="store" compatibility="9.10.011" expanded="true" height="68" name="Store weights" width="90" x="112" y="187">
+                <parameter key="repository_entry" value="../Results/A2_DeepLearning_V2_Crossval_Weight"/>
+              </operator>
               <connect from_port="model" to_op="Apply Model" to_port="model"/>
               <connect from_port="test set" to_op="Apply Model" to_port="unlabelled data"/>
+              <connect from_port="through 1" to_op="Store weights" to_port="input"/>
               <connect from_op="Apply Model" from_port="labelled data" to_op="Performance" to_port="labelled data"/>
-              <connect from_op="Apply Model" from_port="model" to_op="Performance" to_port="performance"/>
               <connect from_op="Performance" from_port="performance" to_port="performance 1"/>
               <portSpacing port="source_model" spacing="0"/>
               <portSpacing port="source_test set" spacing="0"/>
@@ -242,28 +245,17 @@
               <portSpacing port="sink_performance 2" spacing="0"/>
             </process>
           </operator>
-          <operator activated="true" class="weight_by_information_gain" compatibility="9.10.011" expanded="true" height="82" name="Weight by Information Gain" width="90" x="514" y="187">
-            <parameter key="normalize_weights" value="false"/>
-            <parameter key="sort_weights" value="true"/>
-            <parameter key="sort_direction" value="ascending"/>
-          </operator>
           <connect from_port="input 1" to_op="Cross Validation" to_port="example set"/>
           <connect from_op="Cross Validation" from_port="model" to_port="model"/>
-          <connect from_op="Cross Validation" from_port="example set" to_op="Weight by Information Gain" to_port="example set"/>
           <connect from_op="Cross Validation" from_port="test result set" to_port="output 1"/>
           <connect from_op="Cross Validation" from_port="performance 1" to_port="performance"/>
-          <connect from_op="Weight by Information Gain" from_port="weights" to_port="output 2"/>
           <portSpacing port="source_input 1" spacing="0"/>
           <portSpacing port="source_input 2" spacing="0"/>
           <portSpacing port="sink_performance" spacing="0"/>
           <portSpacing port="sink_model" spacing="0"/>
           <portSpacing port="sink_output 1" spacing="0"/>
           <portSpacing port="sink_output 2" spacing="0"/>
-          <portSpacing port="sink_output 3" spacing="0"/>
         </process>
-      </operator>
-      <operator activated="true" class="store" compatibility="9.10.011" expanded="true" height="68" name="Store weights" width="90" x="782" y="289">
-        <parameter key="repository_entry" value="../Results/A2_DeepLearning_V2_Crossval_Weight"/>
       </operator>
       <operator activated="true" class="store" compatibility="9.10.011" expanded="true" height="68" name="Store Model" width="90" x="849" y="187">
         <parameter key="repository_entry" value="../Models/A2_DeepLearning_v2"/>
@@ -282,7 +274,6 @@
       <connect from_op="Apply Feature Set" from_port="feature set" to_op="Store Features" to_port="input"/>
       <connect from_op="Optimize Parameters (Grid)" from_port="performance" to_op="Store Cross Validation Performance" to_port="input"/>
       <connect from_op="Optimize Parameters (Grid)" from_port="model" to_op="Store Model" to_port="input"/>
-      <connect from_op="Optimize Parameters (Grid)" from_port="output 2" to_op="Store weights" to_port="input"/>
       <connect from_op="Store Cross Validation Performance" from_port="through" to_port="result 1"/>
       <portSpacing port="source_input 1" spacing="0"/>
       <portSpacing port="sink_result 1" spacing="0"/>
