@@ -133,7 +133,7 @@
       <operator activated="true" class="store" compatibility="10.0.000" expanded="true" height="68" name="Store Features" width="90" x="648" y="289">
         <parameter key="repository_entry" value="../Models/A2_DeepLearning_Features"/>
       </operator>
-      <operator activated="true" class="concurrency:optimize_parameters_grid" compatibility="10.0.000" expanded="true" height="124" name="Optimize Parameters (Grid)" width="90" x="648" y="85">
+      <operator activated="true" class="concurrency:optimize_parameters_grid" compatibility="10.0.000" expanded="true" height="145" name="Optimize Parameters (Grid)" width="90" x="648" y="85">
         <list key="parameters">
           <parameter key="Deep Learning (2).activation" value="Tanh,Rectifier,Maxout"/>
           <parameter key="Deep Learning (2).epochs" value="[10;20;5;linear]"/>
@@ -144,7 +144,7 @@
         <parameter key="synchronize" value="false"/>
         <parameter key="enable_parallel_execution" value="true"/>
         <process expanded="true">
-          <operator activated="true" class="concurrency:cross_validation" compatibility="10.0.000" expanded="true" height="145" name="Cross Validation" width="90" x="514" y="34">
+          <operator activated="true" class="concurrency:cross_validation" compatibility="10.0.000" expanded="true" height="145" name="Cross Validation" width="90" x="380" y="34">
             <parameter key="split_on_batch_attribute" value="false"/>
             <parameter key="leave_one_out" value="false"/>
             <parameter key="number_of_folds" value="10"/>
@@ -242,15 +242,26 @@
               <portSpacing port="sink_performance 2" spacing="0"/>
             </process>
           </operator>
+          <operator activated="true" class="weight_by_information_gain" compatibility="10.0.000" expanded="true" height="82" name="Weight by Information Gain" width="90" x="581" y="187">
+            <parameter key="normalize_weights" value="false"/>
+            <parameter key="sort_weights" value="true"/>
+            <parameter key="sort_direction" value="ascending"/>
+          </operator>
           <connect from_port="input 1" to_op="Cross Validation" to_port="example set"/>
           <connect from_op="Cross Validation" from_port="model" to_port="model"/>
+          <connect from_op="Cross Validation" from_port="example set" to_op="Weight by Information Gain" to_port="example set"/>
           <connect from_op="Cross Validation" from_port="performance 1" to_port="performance"/>
+          <connect from_op="Weight by Information Gain" from_port="weights" to_port="output 1"/>
           <portSpacing port="source_input 1" spacing="0"/>
           <portSpacing port="source_input 2" spacing="0"/>
           <portSpacing port="sink_performance" spacing="0"/>
           <portSpacing port="sink_model" spacing="0"/>
           <portSpacing port="sink_output 1" spacing="0"/>
+          <portSpacing port="sink_output 2" spacing="0"/>
         </process>
+      </operator>
+      <operator activated="true" class="store" compatibility="10.0.000" expanded="true" height="68" name="Store" width="90" x="849" y="391">
+        <parameter key="repository_entry" value="../Results/A2_DeepLearning_Weight"/>
       </operator>
       <operator activated="true" class="store" compatibility="10.0.000" expanded="true" height="68" name="Store Parameters" width="90" x="916" y="136">
         <parameter key="repository_entry" value="../Models/A2_DeepLearning_Parameters"/>
@@ -270,6 +281,7 @@
       <connect from_op="Optimize Parameters (Grid)" from_port="performance" to_op="Store Cross Validation Performance" to_port="input"/>
       <connect from_op="Optimize Parameters (Grid)" from_port="model" to_op="Store Model" to_port="input"/>
       <connect from_op="Optimize Parameters (Grid)" from_port="parameter set" to_op="Store Parameters" to_port="input"/>
+      <connect from_op="Optimize Parameters (Grid)" from_port="output 1" to_op="Store" to_port="input"/>
       <connect from_op="Store Parameters" from_port="through" to_port="result 2"/>
       <connect from_op="Store Cross Validation Performance" from_port="through" to_port="result 1"/>
       <portSpacing port="source_input 1" spacing="0"/>
